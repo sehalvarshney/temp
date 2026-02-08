@@ -1,189 +1,142 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-// import './MLPredict.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "../css/ml.css"; // Add this import
 
 const MLPredict = () => {
-  const [inputText, setInputText] = useState('');
-  const [prediction, setPrediction] = useState(null);
+  const [lead, setLead] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [history, setHistory] = useState([]);
+  const [error, setError] = useState("");
+  const [fetchCount, setFetchCount] = useState(0);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!inputText.trim()) {
-      setError('Please enter some text for prediction');
-      return;
-    }
-
+  const fetchLead = async () => {
     setLoading(true);
-    setError('');
-    setPrediction(null);
+    setError("");
+    setLead(null); // Clear previous lead for animation
 
     try {
-      const response = await axios.post('/api/predict', {
-        input: inputText
-      });
+      const response = await axios.get("/api/predict");
 
       if (response.data.success) {
-        const newPrediction = {
-          input: inputText,
-          output: response.data.prediction,
-          timestamp: new Date().toLocaleTimeString()
-        };
-        
-        setPrediction(newPrediction);
-        setHistory(prev => [newPrediction, ...prev.slice(0, 4)]); // Keep last 5
+        setLead(response.data.data);
+        setFetchCount(prev => prev + 1);
       } else {
-        setError('Prediction failed: ' + response.data.message);
+        setError("Failed to load lead dossier");
       }
     } catch (err) {
-      setError('Error connecting to prediction service');
-      console.error('Prediction error:', err);
+      console.error(err);
+      setError("Unable to connect to backend. Please check the server.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleExample = (exampleText) => {
-    setInputText(exampleText);
-  };
-
-  const examples = [
-    "Analyze this customer feedback for sentiment...",
-    "Predict the next quarter sales based on current trends...",
-    "Classify this document as urgent or normal priority...",
-    "Extract key entities from the following business text..."
-  ];
+  useEffect(() => {
+    fetchLead();
+  }, []);
 
   return (
     <div className="ml-predict-container">
+      {/* Floating elements for background */}
+      <div className="floating-element floating-1"></div>
+      <div className="floating-element floating-2"></div>
+
+      {/* Header Section */}
       <div className="header-section">
-        <h1>🤖 ML Prediction Service</h1>
-        <p>Connect to machine learning models for text analysis and predictions</p>
+        <h1>🏭 Lead Intelligence Dossier</h1>
+        <p>AI-powered B2B opportunity discovery and recommendation engine</p>
+
+        <button className="predict-btn" onClick={fetchLead} disabled={loading}>
+          {loading ? "🔄 Analyzing..." : "🔄 Refresh Intelligence"}
+        </button>
       </div>
 
-      <div className="content-grid">
-        {/* Input Section */}
-        <div className="input-section">
-          <div className="input-card">
-            <h3>Enter Text for Analysis</h3>
+      {/* Loading State */}
+      {loading && (
+        <div className="loading-state">
+          <div className="ai-loader"></div>
+          <p>AI scanning business landscape for opportunities</p>
+        </div>
+      )}
+
+      {/* Error State */}
+      {error && !loading && (
+        <div className="error-message">
+          {error}
+        </div>
+      )}
+
+      {/* Results */}
+      {lead && !loading && (
+        <div className={`result-card ${fetchCount > 1 ? 'new-lead' : ''}`}>
+          {/* Company Details */}
+          <h3>📊 Company Intelligence Report</h3>
+          
+          <div className="lead-details">
+            <div className="detail-item">
+              <strong>Company</strong>
+              <p>{lead.company_name}</p>
+            </div>
             
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <textarea
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  placeholder="Enter text for ML prediction..."
-                  rows="6"
-                  disabled={loading}
-                />
-                <div className="char-count">
-                  {inputText.length} characters
+            <div className="detail-item">
+              <strong>Facility Location</strong>
+              <p>{lead.facility_location}</p>
+            </div>
+          </div>
+
+          {/* Recommended Products */}
+          <div className="products-section">
+            <strong>✨ Recommended Products</strong>
+            <div className="product-tags">
+              {lead.recommended_product.map((p, i) => (
+                <div key={i} className="product-tag">
+                  {p}
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
 
-              <div className="example-buttons">
-                <p>Try an example:</p>
-                <div className="example-grid">
-                  {examples.map((example, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      onClick={() => handleExample(example)}
-                      className="example-btn"
-                      disabled={loading}
-                    >
-                      Example {index + 1}
-                    </button>
-                  ))}
-                </div>
-              </div>
+          {/* Metrics */}
+          <div className="metrics-grid">
+            <div className="metric-card">
+              <span className="metric-label">Confidence Score</span>
+              <span className="metric-value confidence">
+                {(lead.confidence_score * 100).toFixed(1)}%
+              </span>
+            </div>
+            
+            <div className="metric-card">
+              <span className="metric-label">Urgency Level</span>
+              <span className="metric-value urgency">
+                {lead.urgency}
+              </span>
+            </div>
+            
+            <div className="metric-card">
+              <span className="metric-label">Reason Code</span>
+              <span className="metric-value">
+                {lead.reason_code}
+              </span>
+            </div>
+          </div>
 
-              {error && <div className="error-message">{error}</div>}
+          {/* Suggested Action */}
+          <div className="action-section">
+            <strong>🚀 Suggested Action</strong>
+            <p>{lead.suggested_action}</p>
+          </div>
 
-              <button 
-                type="submit" 
-                className="predict-btn"
-                disabled={loading || !inputText.trim()}
-              >
-                {loading ? (
-                  <>
-                    <span className="spinner"></span>
-                    Processing...
-                  </>
-                ) : 'Get Prediction'}
-              </button>
-            </form>
+          {/* Extracted Signal */}
+          <div className="signal-section">
+            <strong>📡 Extracted Market Signal</strong>
+            <pre className="signal-pre">{lead.extracted_act}</pre>
+          </div>
+
+          {/* Footer */}
+          <div style={{ marginTop: '30px', textAlign: 'center', color: '#94a3b8', fontSize: '14px' }}>
+            <p>📈 AI Model updated: Just now • Refresh for latest intelligence</p>
           </div>
         </div>
-
-        {/* Results Section */}
-        <div className="results-section">
-          {/* Current Prediction */}
-          {prediction && (
-            <div className="result-card">
-              <h3>📊 Prediction Result</h3>
-              <div className="result-meta">
-                <span className="timestamp">🕒 {prediction.timestamp}</span>
-              </div>
-              
-              <div className="result-content">
-                <div className="input-preview">
-                  <strong>Input:</strong>
-                  <p>{prediction.input.length > 100 
-                    ? `${prediction.input.substring(0, 100)}...` 
-                    : prediction.input}
-                  </p>
-                </div>
-                
-                <div className="prediction-output">
-                  <strong>ML Output:</strong>
-                  <pre>{JSON.stringify(prediction.output, null, 2)}</pre>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Prediction History */}
-          {history.length > 0 && (
-            <div className="history-card">
-              <h4>📜 Recent Predictions</h4>
-              <div className="history-list">
-                {history.map((item, index) => (
-                  <div key={index} className="history-item">
-                    <div className="history-header">
-                      <span className="history-time">{item.timestamp}</span>
-                    </div>
-                    <p className="history-input">
-                      {item.input.length > 50 
-                        ? `${item.input.substring(0, 50)}...` 
-                        : item.input}
-                    </p>
-                    <div className="history-status">
-                      <span className="status-badge success">Success</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Empty State */}
-          {!prediction && history.length === 0 && (
-            <div className="empty-state">
-              <div className="empty-icon">🤖</div>
-              <h4>No Predictions Yet</h4>
-              <p>Enter text above to get your first ML prediction</p>
-              <div className="ml-info">
-                <p><strong>Connected to:</strong> https://ml-server.com/predict</p>
-                <p><strong>Service:</strong> Text Analysis & Prediction</p>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      )}
     </div>
   );
 };

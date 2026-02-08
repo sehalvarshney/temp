@@ -1,13 +1,13 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-// import './Navigation.css';
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import '../css/Navigation.css';
 
 const Navigation = ({ user, onLogout }) => {
   const location = useLocation();
 
   const navItems = [
-    { path: '/companies', label: '🏢 Companies', icon: '🏢' },
-    { path: '/predict', label: '🤖 ML Predict', icon: '🤖' },
+    { path: "/companies", label: "🏢 Companies", icon: "🏢" },
+    { path: "/predict", label: "📊 Lead Intelligence", icon: "📊" }
   ];
 
   return (
@@ -25,7 +25,9 @@ const Navigation = ({ user, onLogout }) => {
             <Link
               key={item.path}
               to={item.path}
-              className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
+              className={`nav-item ${
+                location.pathname === item.path ? "active" : ""
+              }`}
             >
               <span className="nav-icon">{item.icon}</span>
               <span className="nav-label">{item.label}</span>
@@ -36,13 +38,14 @@ const Navigation = ({ user, onLogout }) => {
         <div className="nav-user">
           <div className="user-info">
             <div className="user-avatar">
-              {user?.name?.charAt(0).toUpperCase() || 'U'}
+              {user?.name?.charAt(0).toUpperCase() || "U"}
             </div>
             <div className="user-details">
-              <span className="user-name">{user?.name || 'User'}</span>
-              <span className="user-email">{user?.email || ''}</span>
+              <span className="user-name">{user?.name || "User"}</span>
+              <span className="user-email">{user?.email || ""}</span>
             </div>
           </div>
+
           <button onClick={onLogout} className="logout-btn">
             Logout
           </button>
