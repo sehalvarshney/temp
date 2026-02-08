@@ -1,21 +1,21 @@
-/* MLPredict.css - AI Intelligence Dashboard */
+/* MLPredict.css - Light theme version to match Home.css */
 
 .ml-predict-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   animation: fadeIn 0.8s ease-out;
 }
 
-/* Header Section */
+/* Header Section - Light theme */
 .header-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #003087 0%, #0070ba 100%);
   border-radius: 20px;
   padding: 40px;
   margin-bottom: 40px;
   color: white;
-  box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 48, 135, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -58,14 +58,14 @@
   z-index: 1;
 }
 
-/* Predict Button */
+/* Predict Button - Light theme */
 .predict-btn {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 255, 255, 0.3);
   color: white;
   padding: 14px 32px;
-  border-radius: 12px;
+  border-radius: 50px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -79,7 +79,7 @@
 
 .predict-btn:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
 }
 
@@ -127,7 +127,7 @@
   width: 80px;
   height: 80px;
   border: 4px solid #e0e0e0;
-  border-top-color: #667eea;
+  border-top-color: #003087;
   animation: spin 1s linear infinite;
 }
 
@@ -137,7 +137,7 @@
   top: 10px;
   left: 10px;
   border: 4px solid transparent;
-  border-top-color: #764ba2;
+  border-top-color: #0070ba;
   animation: spin 0.8s linear infinite reverse;
 }
 
@@ -147,7 +147,7 @@
 
 .loading-state p {
   font-size: 18px;
-  color: #667eea;
+  color: #003087;
   font-weight: 600;
   margin-top: 20px;
   position: relative;
@@ -169,7 +169,7 @@
   background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
   color: white;
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 10px;
   margin: 30px 0;
   display: flex;
   align-items: center;
@@ -189,15 +189,22 @@
   20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
 
-/* Result Card */
+/* Result Card - Light theme */
 .result-card {
   background: white;
   border-radius: 20px;
   padding: 40px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
   animation: slideUp 0.6s ease-out 0.2s both;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateY(0deg);
+}
+
+.result-card:hover {
+  transform: perspective(1000px) rotateY(5deg) translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 48, 135, 0.15);
 }
 
 @keyframes slideUp {
@@ -218,7 +225,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+  background: linear-gradient(90deg, #003087, #0070ba, #003087);
   background-size: 200% 100%;
   animation: gradientMove 2s linear infinite;
 }
@@ -230,7 +237,7 @@
 
 .result-card h3 {
   font-size: 28px;
-  color: #2d3748;
+  color: #003087;
   margin-bottom: 30px;
   display: flex;
   align-items: center;
@@ -254,7 +261,7 @@
   background: #f8fafc;
   padding: 20px;
   border-radius: 12px;
-  border-left: 4px solid #667eea;
+  border-left: 4px solid #0070ba;
   transition: transform 0.3s ease;
 }
 
@@ -265,7 +272,7 @@
 
 .detail-item strong {
   display: block;
-  color: #4a5568;
+  color: #003087;
   font-size: 14px;
   margin-bottom: 8px;
   text-transform: uppercase;
@@ -273,7 +280,7 @@
 }
 
 .detail-item p {
-  color: #2d3748;
+  color: #333;
   font-size: 18px;
   font-weight: 600;
   margin: 0;
@@ -289,7 +296,7 @@
 }
 
 .products-section strong {
-  color: #2d3748;
+  color: #003087;
   font-size: 18px;
   display: block;
   margin-bottom: 20px;
@@ -306,8 +313,8 @@
   padding: 12px 20px;
   border-radius: 50px;
   font-weight: 600;
-  color: #2d3748;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+  color: #333;
+  box-shadow: 0 4px 15px rgba(0, 48, 135, 0.1);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -316,7 +323,7 @@
 
 .product-tag:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+  box-shadow: 0 8px 25px rgba(0, 48, 135, 0.15);
 }
 
 .product-tag::before {
@@ -343,7 +350,7 @@
 
 .metric-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 15px 40px rgba(0, 48, 135, 0.1);
 }
 
 .metric-label {
@@ -358,7 +365,7 @@
 .metric-value {
   font-size: 28px;
   font-weight: 800;
-  color: #2d3748;
+  color: #333;
 }
 
 .metric-value.confidence {
@@ -405,7 +412,7 @@
 
 /* Signal Section */
 .signal-section {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #003087 0%, #0070ba 100%);
   padding: 30px;
   border-radius: 15px;
   margin-top: 40px;
@@ -446,31 +453,31 @@ hr {
   .ml-predict-container {
     padding: 20px 15px;
   }
-  
+
   .header-section {
     padding: 30px 20px;
   }
-  
+
   .header-section h1 {
     font-size: 32px;
   }
-  
+
   .result-card {
     padding: 25px 20px;
   }
-  
+
   .lead-details {
     grid-template-columns: 1fr;
   }
-  
+
   .metrics-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .product-tags {
     flex-direction: column;
   }
-  
+
   .product-tag {
     justify-content: center;
   }
@@ -480,16 +487,16 @@ hr {
   .header-section h1 {
     font-size: 28px;
   }
-  
+
   .predict-btn {
     width: 100%;
     justify-content: center;
   }
-  
+
   .result-card h3 {
     font-size: 24px;
   }
-  
+
   .metric-value {
     font-size: 24px;
   }
@@ -503,6 +510,7 @@ hr {
 
 .new-lead {
   animation: highlightNew 1s ease-out;
+<<<<<<< HEAD
 }
 
 /* Floating elements for futuristic look */
@@ -538,4 +546,6 @@ hr {
   50% { transform: translate(0, 40px) rotate(180deg); }
   75% { transform: translate(-20px, 20px) rotate(270deg); }
   100% { transform: translate(0, 0) rotate(360deg); }
+=======
+>>>>>>> 6ef3ddc69ed0859c732509401a4bb7f3b4d00f69
 }

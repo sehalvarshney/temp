@@ -1,21 +1,18 @@
-Navigation.css
+/* Navigation.css - Light theme version to match Home.css */
 
 /* Base styles and variables */
 :root {
-  --primary-color: #1e3c72;
-  --secondary-color: #2a5298;
-  --accent-color: #00c6ff;
-  --light-color: #f5f7fa;
-  --dark-color: #0d2444;
-  --success-color: #4CAF50;
-  --warning-color: #FF9800;
-  --danger-color: #f44336;
-  --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.12);
-  --shadow-heavy: 0 12px 36px rgba(0, 0, 0, 0.15);
-  --transition-fast: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-medium: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  --primary-color: #003087;
+  --secondary-color: #0070ba;
+  --light-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --white: white;
+  --gray-light: #f8fafc;
+  --gray-medium: #e2e8f0;
+  --text-dark: #333;
+  --text-light: #666;
+  --shadow-light: 0 2px 20px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 5px 15px rgba(0, 48, 135, 0.2);
+  --shadow-heavy: 0 10px 30px rgba(0, 48, 135, 0.3);
 }
 
 /* Main navigation container */
@@ -74,7 +71,7 @@ Navigation.css
   display: flex;
   align-items: center;
   text-decoration: none;
-  transition: var(--transition-fast);
+  transition: all 0.3s ease;
   padding: 0.5rem;
   border-radius: 12px;
   position: relative;
@@ -88,9 +85,9 @@ Navigation.css
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(30, 60, 114, 0.1) 0%, rgba(42, 82, 152, 0.1) 100%);
+  background: linear-gradient(135deg, rgba(0, 48, 135, 0.1) 0%, rgba(0, 112, 186, 0.1) 100%);
   opacity: 0;
-  transition: var(--transition-fast);
+  transition: all 0.3s ease;
   border-radius: 12px;
 }
 
@@ -108,6 +105,7 @@ Navigation.css
   display: inline-block;
   animation: rocketFloat 3s infinite ease-in-out;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  color: #003087;
 }
 
 @keyframes rocketFloat {
@@ -126,28 +124,12 @@ Navigation.css
   font-size: 1.8rem;
   font-weight: 800;
   color: var(--primary-color);
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: -0.5px;
   position: relative;
-}
-
-.brand-text::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
-  border-radius: 2px;
-  transition: var(--transition-medium);
-}
-
-.brand-link:hover .brand-text::after {
-  width: 100%;
 }
 
 /* Navigation items */
@@ -172,11 +154,11 @@ Navigation.css
   text-decoration: none;
   padding: 0.8rem 1.5rem;
   border-radius: 50px;
-  transition: var(--transition-fast);
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   background: rgba(245, 247, 250, 0.7);
-  color: var(--dark-color);
+  color: #555;
   font-weight: 500;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
@@ -189,7 +171,7 @@ Navigation.css
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-  transition: var(--transition-medium);
+  transition: all 0.5s ease;
 }
 
 .nav-item:hover::before {
@@ -199,7 +181,7 @@ Navigation.css
 .nav-item:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-medium);
-  background: linear-gradient(135deg, rgba(30, 60, 114, 0.1), rgba(0, 198, 255, 0.1));
+  background: linear-gradient(135deg, rgba(0, 48, 135, 0.1), rgba(0, 112, 186, 0.1));
   color: var(--primary-color);
 }
 
@@ -218,7 +200,7 @@ Navigation.css
   transform: translateX(-50%);
   width: 50%;
   height: 3px;
-  background: var(--accent-color);
+  background: white;
   border-radius: 2px;
   animation: pulse 2s infinite;
 }
@@ -237,7 +219,7 @@ Navigation.css
 .nav-icon {
   font-size: 1.3rem;
   margin-right: 0.8rem;
-  transition: var(--transition-fast);
+  transition: all 0.3s ease;
   display: inline-block;
 }
 
@@ -290,13 +272,13 @@ Navigation.css
   padding: 0.5rem 1rem;
   border-radius: 50px;
   background: rgba(245, 247, 250, 0.7);
-  transition: var(--transition-fast);
+  transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
 }
 
 .user-info:hover {
-  background: rgba(30, 60, 114, 0.08);
+  background: rgba(0, 48, 135, 0.08);
   transform: translateY(-2px);
   box-shadow: var(--shadow-light);
 }
@@ -305,15 +287,15 @@ Navigation.css
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 1.2rem;
-  box-shadow: 0 4px 8px rgba(30, 60, 114, 0.2);
-  transition: var(--transition-fast);
+  box-shadow: 0 4px 8px rgba(0, 48, 135, 0.2);
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
@@ -363,17 +345,17 @@ Navigation.css
 /* Logout button */
 .logout-btn {
   padding: 0.8rem 1.8rem;
-  background: linear-gradient(135deg, #f44336, #d32f2f);
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
   color: white;
   border: none;
   border-radius: 50px;
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: var(--transition-fast);
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.2);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
   letter-spacing: 0.5px;
 }
 
@@ -385,12 +367,12 @@ Navigation.css
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: var(--transition-medium);
+  transition: all 0.5s ease;
 }
 
 .logout-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(244, 67, 54, 0.3);
+  box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
 }
 
 .logout-btn:hover::before {
@@ -406,15 +388,15 @@ Navigation.css
   .nav-container {
     padding: 0.8rem 1.5rem;
   }
-  
+
   .nav-items {
     gap: 1rem;
   }
-  
+
   .nav-item {
     padding: 0.7rem 1.2rem;
   }
-  
+
   .brand-text {
     font-size: 1.6rem;
   }
@@ -426,25 +408,25 @@ Navigation.css
     justify-content: center;
     gap: 1rem;
   }
-  
+
   .nav-brand {
     order: 1;
     flex: 1;
   }
-  
+
   .nav-items {
     order: 3;
     width: 100%;
     justify-content: center;
     margin-top: 1rem;
   }
-  
+
   .nav-user {
     order: 2;
     flex: 1;
     justify-content: flex-end;
   }
-  
+
   .user-details {
     display: none;
   }
@@ -454,24 +436,24 @@ Navigation.css
   .nav-container {
     padding: 0.8rem 1rem;
   }
-  
+
   .nav-items {
     flex-wrap: wrap;
     justify-content: center;
   }
-  
+
   .nav-item {
     padding: 0.6rem 1rem;
   }
-  
+
   .nav-label {
     font-size: 0.9rem;
   }
-  
+
   .brand-text {
     font-size: 1.4rem;
   }
-  
+
   .logout-btn {
     padding: 0.7rem 1.5rem;
     font-size: 0.9rem;
@@ -481,10 +463,10 @@ Navigation.css
 /* Active state indicator animation */
 @keyframes activeGlow {
   0%, 100% {
-    box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 112, 186, 0.5);
   }
   50% {
-    box-shadow: 0 0 20px rgba(0, 198, 255, 0.8);
+    box-shadow: 0 0 20px rgba(0, 112, 186, 0.8);
   }
 }
 
