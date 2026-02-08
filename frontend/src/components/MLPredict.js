@@ -1,141 +1,82 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "../css/ml.css"; // Add this import
+import api from "../api/axios";
+import LeadList from "./LeadList";
+import "../css/ml.css";
 
 const MLPredict = () => {
-  const [lead, setLead] = useState(null);
+  const [leads, setLeads] = useState([]);
+  const [selectedLead, setSelectedLead] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [fetchCount, setFetchCount] = useState(0);
 
-  const fetchLead = async () => {
+  const fetchLeads = async () => {
     setLoading(true);
     setError("");
-    setLead(null); // Clear previous lead for animation
+    setSelectedLead(null);
 
     try {
-      const response = await axios.get("/api/predict");
+      const response = await api.get("http://localhost:5000/api/predict");
 
       if (response.data.success) {
-        setLead(response.data.data);
-        setFetchCount(prev => prev + 1);
+        setLeads(response.data.data);
       } else {
-        setError("Failed to load lead dossier");
+        setError("Failed to load leads");
       }
     } catch (err) {
-      console.error(err);
-      setError("Unable to connect to backend. Please check the server.");
+      setError("Unable to connect to backend");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchLead();
+    fetchLeads();
   }, []);
 
   return (
     <div className="ml-predict-container">
-      {/* Floating elements for background */}
-      <div className="floating-element floating-1"></div>
-      <div className="floating-element floating-2"></div>
-
-      {/* Header Section */}
       <div className="header-section">
-        <h1>🏭 Lead Intelligence Dossier</h1>
-        <p>AI-powered B2B opportunity discovery and recommendation engine</p>
+        <h1>🏭 Lead Intelligence</h1>
+        <p>Prioritized B2B opportunities detected by AI</p>
 
-        <button className="predict-btn" onClick={fetchLead} disabled={loading}>
-          {loading ? "🔄 Analyzing..." : "🔄 Refresh Intelligence"}
+        <button className="predict-btn" onClick={fetchLeads} disabled={loading}>
+          🔄 Refresh Intelligence
         </button>
       </div>
 
-      {/* Loading State */}
-      {loading && (
-        <div className="loading-state">
-          <div className="ai-loader"></div>
-          <p>AI scanning business landscape for opportunities</p>
-        </div>
-      )}
+      {loading && <p>Loading leads...</p>}
+      {error && <div className="error-message">{error}</div>}
 
-      {/* Error State */}
-      {error && !loading && (
-        <div className="error-message">
-          {error}
-        </div>
-      )}
+      {!loading && leads.length > 0 && (
+        <>
+          {/* LIST VIEW */}
+          <LeadList leads={leads} onSelect={setSelectedLead} />
 
-      {/* Results */}
-      {lead && !loading && (
-        <div className={`result-card ${fetchCount > 1 ? 'new-lead' : ''}`}>
-          {/* Company Details */}
-          <h3>📊 Company Intelligence Report</h3>
-          
-          <div className="lead-details">
-            <div className="detail-item">
-              <strong>Company</strong>
-              <p>{lead.company_name}</p>
+          {/* DETAIL VIEW */}
+          {selectedLead && (
+            <div className="result-card">
+              <h3>📊 Company Intelligence Report</h3>
+
+              <p><strong>Company:</strong> {selectedLead.company_name}</p>
+              <p><strong>Location:</strong> {selectedLead.facility_location}</p>
+
+              <p><strong>Urgency:</strong> {selectedLead.urgency}</p>
+              <p><strong>Confidence:</strong> {selectedLead.confidence_score}/10</p>
+
+              <p><strong>Reason:</strong> {selectedLead.reason_code}</p>
+
+              <p><strong>Recommended Products:</strong></p>
+              <ul>
+                {selectedLead.recommended_products.map((p, i) => (
+                  <li key={i}>{p}</li>
+                ))}
+              </ul>
+
+              <p><strong>Suggested Action:</strong></p>
+              <p>{selectedLead.suggested_action}</p>
             </div>
-            
-            <div className="detail-item">
-              <strong>Facility Location</strong>
-              <p>{lead.facility_location}</p>
-            </div>
-          </div>
-
-          {/* Recommended Products */}
-          <div className="products-section">
-            <strong>✨ Recommended Products</strong>
-            <div className="product-tags">
-              {lead.recommended_product.map((p, i) => (
-                <div key={i} className="product-tag">
-                  {p}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Metrics */}
-          <div className="metrics-grid">
-            <div className="metric-card">
-              <span className="metric-label">Confidence Score</span>
-              <span className="metric-value confidence">
-                {(lead.confidence_score * 100).toFixed(1)}%
-              </span>
-            </div>
-            
-            <div className="metric-card">
-              <span className="metric-label">Urgency Level</span>
-              <span className="metric-value urgency">
-                {lead.urgency}
-              </span>
-            </div>
-            
-            <div className="metric-card">
-              <span className="metric-label">Reason Code</span>
-              <span className="metric-value">
-                {lead.reason_code}
-              </span>
-            </div>
-          </div>
-
-          {/* Suggested Action */}
-          <div className="action-section">
-            <strong>🚀 Suggested Action</strong>
-            <p>{lead.suggested_action}</p>
-          </div>
-
-          {/* Extracted Signal */}
-          <div className="signal-section">
-            <strong>📡 Extracted Market Signal</strong>
-            <pre className="signal-pre">{lead.extracted_act}</pre>
-          </div>
-
-          {/* Footer */}
-          <div style={{ marginTop: '30px', textAlign: 'center', color: '#94a3b8', fontSize: '14px' }}>
-            <p>📈 AI Model updated: Just now • Refresh for latest intelligence</p>
-          </div>
-        </div>
+          )}
+        </>
       )}
     </div>
   );

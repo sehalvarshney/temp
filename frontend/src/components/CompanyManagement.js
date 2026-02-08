@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import '../css/company.css';
 
@@ -37,7 +37,7 @@ const CompanyManagement = () => {
       setLoading(true);
       console.log("📡 Fetching companies from:", `${API}/api/companies`);
       
-      const response = await axios.get(`${API}/api/companies`, {
+      const response = await api.get(`${API}/api/companies`, {
         timeout: 10000,
         headers: {
           'Accept': 'application/json'
@@ -90,7 +90,7 @@ const CompanyManagement = () => {
       // Try debug endpoint
       try {
         console.log("🔄 Trying debug endpoint...");
-        const debugResponse = await axios.get(`${API}/api/companies/debug/all`);
+        const debugResponse = await api.get(`${API}/api/companies/debug/all`);
         console.log("Debug endpoint response:", debugResponse.data);
       } catch (debugError) {
         console.error("Debug endpoint also failed:", debugError.message);
@@ -183,7 +183,7 @@ const CompanyManagement = () => {
       console.log("📤 Sending payload:", payload);
       console.log("📤 Sending to URL:", `${API}/api/companies`);
 
-      const response = await axios.post(
+      const response = await api.post(
         `${API}/api/companies`,
         payload,
         {
@@ -284,7 +284,7 @@ const CompanyManagement = () => {
       setLoading(true);
       console.log("🧪 Testing API connection to:", API);
       
-      const response = await axios.get(`${API}/api/test`, { timeout: 5000 });
+      const response = await api.get(`${API}/api/test`, { timeout: 5000 });
       console.log("✅ Connection test successful:", response.data);
       setMessage(`✅ Backend is working: ${response.data.message}`);
       

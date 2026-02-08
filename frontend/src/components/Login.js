@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from "../api/axios";
 import '../css/Login.css';
 
 const Login = ({ onLogin }) => {
@@ -25,7 +25,7 @@ const Login = ({ onLogin }) => {
 
     try {
       // API call to login endpoint
-      const response = await axios.post('http://localhost:5000/api/auth/login', formData);
+      const response = await api.post('http://localhost:5000/api/auth/login', formData);
       
       if (response.status === 200) {
         onLogin(response.data.user);

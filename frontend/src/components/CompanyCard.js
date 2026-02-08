@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from "../api/axios";
 import '../css/company.css';
 const API = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
@@ -23,7 +23,7 @@ const CompanyCard = () => {
       setError('');
       setDebugInfo('Fetching company details...');
       
-      const response = await axios.get(`${API}/api/companies/${id}`, {
+      const response = await api.get(`${API}/api/companies/${id}`, {
         timeout: 10000
       });
       
@@ -76,7 +76,7 @@ const CompanyCard = () => {
     if (window.confirm('Are you sure you want to delete this company?')) {
       try {
         setLoading(true);
-        await axios.delete(`${API}/api/companies/${id}`);
+        await api.delete(`${API}/api/companies/${id}`);
         alert('Company deleted successfully!');
         navigate('/companies');
       } catch (err) {
