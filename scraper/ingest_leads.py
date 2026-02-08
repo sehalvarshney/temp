@@ -2,8 +2,11 @@ import os, json, asyncio
 from datetime import datetime
 from crawl4ai import AsyncWebCrawler
 import httpx
+from dotenv import load_dotenv
 
-GROQ_API_KEY = "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"
+load_dotenv()
+
+GROQ_API_KEY = os.getenv("GOOGLE_API_KEY")
 SOURCES = ["https://morth.nic.in/tenders/",
 
     "https://energy.economictimes.indiatimes.com/rss/topstories",
